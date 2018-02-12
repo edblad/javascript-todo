@@ -1,0 +1,94 @@
+$black: #1F1F1F;
+$white: #ffffff;
+$turquoise: #5cbbc5;
+$olive: #aaa151;
+$pink: #F669A7;
+
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: $turquoise;
+    font-family: sans-serif;
+}
+
+h1{
+    color: $white;
+    border-bottom: 5px #595959 solid;
+    padding-bottom: 5px;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 40px;
+    
+    .wrapper{
+        width: 100%;
+        display: flex;
+        margin-bottom: 20px;
+        
+        .box{
+            margin-top: 25px;
+            background: $white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .box:first-child{
+            margin-right: 20px;
+        }
+    }
+}
+
+.list{
+    padding: 0;
+    list-style: none;
+    
+    .todo:hover{
+        cursor: pointer;
+        
+        .fa-check-circle{
+            color: $olive;
+        }
+    }
+    
+    .todo{
+        .fa-trash:hover{
+            color: red;
+        }
+    }
+}
+
+h2{
+    background: $olive;
+    padding: 10px;
+    color: $white;
+    border-radius: 30px;
+    text-align: center;
+    width: 125px;
+    position: relative;
+    top: -42px;
+    margin: 0;
+    align-self: center;
+}
+
+@media screen and (max-width: 600px){
+    .wrapper{
+        flex-direction: column;
+        
+        .box{
+            width: 50%;
+        }
+        
+        .box:first-child{
+            margin-bottom: 20px;
+        }
+    }
+}
