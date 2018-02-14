@@ -51,22 +51,17 @@ h1{
     padding: 0;
     list-style: none;
     
-    .todo:hover{
-        cursor: pointer;
-        
-        .fa-check-circle{
-            color: $olive;
-        }
-    }
-    
     .todo{
         border-bottom: #f1f1f1 1px solid;
-        display: inline-block;
-        width: 90%;
-        
-        .fa-trash:hover{
-            color: red;
-        }
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    .done{
+        color: #ccc;
+        border-bottom: #f1f1f1 1px solid;
+        display: flex;
+        justify-content: space-between;
     }
 }
 
