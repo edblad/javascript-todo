@@ -60,6 +60,10 @@ h1{
     }
     
     .todo{
+        border-bottom: #f1f1f1 1px solid;
+        display: inline-block;
+        width: 90%;
+        
         .fa-trash:hover{
             color: red;
         }
