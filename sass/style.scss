@@ -54,14 +54,27 @@ h1{
     .todo{
         border-bottom: #f1f1f1 1px solid;
         display: flex;
-        justify-content: space-between;
+        padding: 10px 0;
+        
+        .completeButton{
+            border: none;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        
+        .completeButton:hover{
+            color: $olive;
+        }
+        
+        .deleteButton{
+            border: 1px solid black;
+            border-radius: 5px;
+            margin-left: auto;
+        }
     }
     
-    .done{
+    .completed{
         color: #ccc;
-        border-bottom: #f1f1f1 1px solid;
-        display: flex;
-        justify-content: space-between;
     }
 }
 
@@ -76,6 +89,10 @@ h2{
     top: -42px;
     margin: 0;
     align-self: center;
+}
+
+button{
+    cursor: pointer;
 }
 
 @media screen and (max-width: 600px){

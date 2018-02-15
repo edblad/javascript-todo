@@ -1,42 +1,62 @@
+//***** VARIABLES *****//
 const todoInput = document.getElementById('todoInput'); 
 const submitTodo = document.getElementById('submitTodo');
 const todoList = document.getElementById('todoList');
-const doneList = document.getElementById('done');
+const completedList = document.getElementById('completedList');
+const deleteAll = document.getElementById('deleteAll');
 
+
+//***** EVENT LISTENERS *****//
+
+// Event listener for the 
 submitTodo.addEventListener('click', function(event){
     event.preventDefault();
     createTodo(todoInput.value);
 });
 
+deleteAll.addEventListener('click', function(){
+    todoList.innerHTML = '';
+});
+
+
+//***** FUNCTIONS *****//
 
 // Create a new todo
 // This will run when the user clicks on the "submitTodo"
 function createTodo(input){
     if(todoInput.value != ''){
         const todoItem = document.createElement('li');
+        const todoText = document.createTextNode(input);
         const deleteButton = document.createElement('button');
-        const doneButton = document.createElement('button');
+        //const completeButton = document.createElement('input');
+        const completeButton = document.createElement('button');
 
-        doneButton.innerText = "Klar";
-        doneButton.addEventListener('click', function(){
-            const doneItem = document.createElement('li');
+        //completeButton.type = 'checkbox';
+        completeButton.classList.add('completeButton');
+        completeButton.innerHTML = '&#10004;';
+        completeButton.addEventListener('click', function(){
+            const completedItem = document.createElement('li');
 
+            deleteButton.classList.add('deleteButton');
             deleteButton.addEventListener('click', deleteTodo);
 
-            doneItem.innerHTML = input;
-            doneItem.classList.add('done');
-            doneItem.appendChild(deleteButton);
-            doneList.appendChild(doneItem);
+            completedItem.innerHTML = input;
+            completedItem.classList.add('completed');
+            completedItem.classList.add('todo');
+            completedItem.appendChild(deleteButton);
+            completedList.appendChild(completedItem);
 
             this.parentElement.remove();
         });
 
+        deleteButton.classList.add('deleteButton');
         deleteButton.innerText = "X";
         deleteButton.addEventListener('click', deleteTodo);
 
-        todoItem.innerText = input;
+        //todoItem.innerText = input;
         todoItem.classList.add('todo');
-        todoItem.appendChild(doneButton);
+        todoItem.appendChild(completeButton);
+        todoItem.appendChild(todoText);
         todoItem.appendChild(deleteButton);
 
         todoList.appendChild(todoItem);
@@ -55,16 +75,6 @@ function addIdToItem(){
         amountOfTodos[i].id = 'todo' + [i];
     };
 };
-
-//function doneTodo(a){
-//    const doneItem = document.createElement('li');
-//    doneItem.innerHTML = a;
-//    doneList.appendChild(doneItem);
-//    console.log(this);
-//    
-//    //this.parentElement.remove();
-//};
-
 
 // This removes the clicked todo item from the ul
 //This will run when the user clicks the rubbish bin
