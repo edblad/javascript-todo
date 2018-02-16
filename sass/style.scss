@@ -36,7 +36,7 @@ h1{
             background: $white;
             padding: 20px;
             border-radius: 10px;
-            width: 100%;
+            width: 50%;
             display: flex;
             flex-direction: column;
         }
@@ -97,8 +97,36 @@ h2{
     align-self: center;
 }
 
-button{
+.addTodoForm{
+    display: flex;
+    align-items: center;
+    border-bottom: 6px dotted $black;
+}
+
+input{
+    border: none;
+}
+
+input[type=text]{
+    
+}
+
+button, input[type=submit]{
     cursor: pointer;
+}
+
+.deleteAll, .submitTodo{
+    border: none;
+    width: 90px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: auto;
+    background-color: lightgray;
+}
+
+.deleteAll:hover, .submitTodo:hover{
+    background-color: $pink;
+    color: white;
 }
 
 @media screen and (max-width: 600px){

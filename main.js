@@ -8,12 +8,13 @@ const deleteAll = document.getElementById('deleteAll');
 
 //***** EVENT LISTENERS *****//
 
-// Event listener for the 
+// Event listener for the add todo button
 submitTodo.addEventListener('click', function(event){
     event.preventDefault();
     createTodo(todoInput.value);
 });
 
+// Event listener for the delete all button
 deleteAll.addEventListener('click', function(){
     todoList.innerHTML = '';
 });
@@ -79,3 +80,7 @@ function addIdToItem(){
 function deleteTodo(){
     this.parentElement.remove();
 };
+const li = document.getElementsByTagName('li');
+if(li){
+    console.log('hi')
+}
