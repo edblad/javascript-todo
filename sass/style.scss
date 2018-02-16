@@ -57,6 +57,7 @@ h1{
         padding: 10px 0;
         
         .completeButton{
+            color: #ccc;
             border: none;
             margin-right: 10px;
             font-size: 1em;
@@ -67,9 +68,14 @@ h1{
         }
         
         .deleteButton{
-            border: 1px solid black;
+            border: none;
             border-radius: 5px;
             margin-left: auto;
+            font-size: 1em;
+        }
+        
+        .deleteButton:hover{
+            color: $pink;
         }
     }
     

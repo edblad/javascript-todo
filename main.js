@@ -28,10 +28,8 @@ function createTodo(input){
         const todoItem = document.createElement('li');
         const todoText = document.createTextNode(input);
         const deleteButton = document.createElement('button');
-        //const completeButton = document.createElement('input');
         const completeButton = document.createElement('button');
 
-        //completeButton.type = 'checkbox';
         completeButton.classList.add('completeButton');
         completeButton.innerHTML = '&#10004;';
         completeButton.addEventListener('click', function(){
@@ -50,7 +48,7 @@ function createTodo(input){
         });
 
         deleteButton.classList.add('deleteButton');
-        deleteButton.innerText = "X";
+        deleteButton.innerHTML = '&#10008;';
         deleteButton.addEventListener('click', deleteTodo);
 
         //todoItem.innerText = input;
