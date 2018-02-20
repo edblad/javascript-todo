@@ -1,18 +1,74 @@
-const todoInput = document.getElementById('todoInput'); // Input field
-const submitTodo = document.getElementById('submitTodo'); // Submit button
-const todoList = document.getElementById('todoList'); // Todo ul list
-const completedList = document.getElementById('completedList'); // Completed ul list
+const todoInput = document.getElementById('todoInput');
+const submitTodo = document.getElementById('submitTodo');
+const todoList = document.getElementById('todoList');
+const completedList = document.getElementById('completedList');
 
 
 // Event listener for the add todo button
 submitTodo.addEventListener('click', function(event){
     event.preventDefault();
-    createTodo(todoInput.value);
+    //createTodo(todoInput.value);
+    addTodo();
+    showTodo();
 });
 
+const todos = [];
+
+for(i = 0; i < localStorage.length; i++){
+    let html = '';
+    html = html + localStorage.getItem('todo' + i);
+    console.log(html);
+};
+
+//var html = localStorage.getItem('todo');
+//todoList.innerHTML = html;
+
+function addTodo(){
+    todos.push(todoInput.value);
+    for(i = 0; i < todos.length; i++){
+        localStorage.setItem('todo' + i, todos[i]);
+    };
+};
+
+function showTodo(){
+    const todoItem = document.createElement('li');
+    let todoText = '';
+    const deleteButton = document.createElement('button');
+    const completeButton = document.createElement('button');
+    
+    for(let todo of todos){
+        todoText = document.createTextNode(todo);
+    };
+    
+    completeButton.classList.add('completeButton');
+    completeButton.innerHTML = '&#10004;';
+    completeButton.addEventListener('click', completeTodo);
+
+    deleteButton.classList.add('deleteButton');
+    deleteButton.innerHTML = '&#10008;';
+    deleteButton.addEventListener('click', deleteTodo);
+
+    todoItem.classList.add('todo');
+    todoItem.appendChild(completeButton);
+    todoItem.appendChild(todoText);
+    todoItem.appendChild(deleteButton);
+
+    todoList.appendChild(todoItem);
+
+    const deleteAllButton = document.getElementById('deleteAll');
+    if(todoList.children.length != 0){
+        deleteAllButton.classList.add('show');
+        deleteAllButton.addEventListener('click', deleteAll);
+    };
+    
+    todoInput.value = '';
+    
+    for(i = 0; i < todos.length; i++){
+        console.log(todos[i]);
+    };
+};
 
 /////// FUNCTIONS ///////
-
 /*  Create a new todo
  *  This will run when the user clicks on the "submitTodo"/Lägg till */
 function createTodo(input){
@@ -21,6 +77,9 @@ function createTodo(input){
         const todoText = document.createTextNode(input);
         const deleteButton = document.createElement('button');
         const completeButton = document.createElement('button');
+        
+        todos.push(input);
+        localStorage.setItem('todos', todos);
         
         completeButton.classList.add('completeButton');
         completeButton.innerHTML = '&#10004;';
@@ -63,6 +122,10 @@ function completeTodo(){
     if(todoList.children.length == 0){
         deleteAllButton.classList.remove('show');
     };
+    
+    for(i = 0; i < todos.length; i++){
+        console.log(todos[i]);
+    };
 };
 
 // Delete the clicked item from the ul
@@ -74,7 +137,7 @@ function deleteTodo(){
         deleteAllButton.classList.remove('show');
     };
 };
-
+ 
 // Delete all todo items from the todo list
 function deleteAll(){
     todoList.innerHTML = '';
