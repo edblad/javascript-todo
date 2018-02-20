@@ -15,10 +15,32 @@ submitTodo.addEventListener('click', function(event){
 const todos = [];
 
 for(i = 0; i < localStorage.length; i++){
-    let html = '';
-    html = html + localStorage.getItem('todo' + i);
-    console.log(html);
+    let todo = '';
+    todo = localStorage.getItem('todo' + i);
+    todos.push(todo);
+    
+    const todoItem = document.createElement('li');
+    var todoText = document.createTextNode(todo);
+    const deleteButton = document.createElement('button');
+    const completeButton = document.createElement('button');
+    
+    completeButton.classList.add('completeButton');
+    completeButton.innerHTML = '&#10004;';
+    completeButton.addEventListener('click', completeTodo);
+
+    deleteButton.classList.add('deleteButton');
+    deleteButton.innerHTML = '&#10008;';
+    deleteButton.addEventListener('click', deleteTodo);
+    
+    todoItem.classList.add('todo');
+    todoItem.appendChild(completeButton);
+    todoItem.appendChild(todoText);
+    todoItem.appendChild(deleteButton);
+    todoList.appendChild(todoItem);
 };
+
+console.log(todos);
+
 
 //var html = localStorage.getItem('todo');
 //todoList.innerHTML = html;
