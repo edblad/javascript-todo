@@ -1,0 +1,12 @@
+.wrapper{
+    flex-direction: row!important;
+
+    .box{
+        width: 50%;
+    }
+    
+    .box:first-child{
+        margin-right: 20px;
+        margin-bottom: 0!important;
+    }
+}

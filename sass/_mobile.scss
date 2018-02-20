@@ -1,0 +1,156 @@
+*{
+    box-sizing: border-box;
+}
+
+body{
+    margin: 0;
+    background-color: $turquoise;
+    font-family: sans-serif;
+}
+
+h1{
+    color: $white;
+    text-shadow: 1px 2px 2px rgba(0,0,0,.16);
+    padding-bottom: 5px;
+    font-family: 'Fredoka One', cursive;
+    text-align: center;
+}
+
+h2{
+    background: $olive;
+    padding: 10px;
+    color: $white;
+    border-radius: 30px;
+    text-align: center;
+    width: 125px;
+    position: relative;
+    top: -42px;
+    margin: 0;
+    align-self: center;
+}
+
+.content{
+    align-items: center;
+    padding: 0 40px;
+    
+    .wrapper{
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        
+        .box{
+            margin-top: 25px;
+            background: $white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .box:first-child{
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.list, .completedList{
+    padding: 0;
+    list-style: none;
+    
+    .todo{
+        border-bottom: #f1f1f1 1px solid;
+        display: flex;
+        padding: 10px 0;
+        animation: fadeIn;
+        animation-duration: 1s;
+        
+        .completeButton{
+            color: #ccc;
+            border: none;
+            margin-right: 10px;
+            font-size: 1em;
+        }
+        
+        .completeButton:hover{
+            color: $olive;
+        }
+        
+        .deleteButton{
+            border: none;
+            border-radius: 5px;
+            margin-left: auto;
+            font-size: 1em;
+        }
+        
+        .deleteButton:hover{
+            color: $pink;
+        }
+    }
+}
+
+.completedList{
+    .todo{
+        color: #ccc;
+    }
+    
+    .completeButton{
+        display: none;
+    }
+}
+
+.addTodoForm{
+    display: flex;
+    align-items: center;
+    border-bottom: 6px dotted $black;
+    padding-bottom: 5px;
+    
+    input{
+        border: none;
+    }
+
+    label{
+        flex: 1;
+    }
+
+    input[type=text]{
+        flex: 5;
+        padding: 10px;
+    }
+
+    input[type=submit]{
+        flex: 1;
+    }
+}
+
+button, input[type=submit]{
+    cursor: pointer;
+}
+
+.deleteAll, .submitTodo{
+    border: none;
+    width: 90px;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: auto;
+    background-color: lightgray;
+}
+
+.deleteAll:hover, .submitTodo:hover{
+    background-color: $pink;
+    color: white;
+}
+
+.hide{
+    display: none;
+}
+
+.show{
+    display: inline-block;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
