@@ -18,7 +18,7 @@ submitTodo.addEventListener('click', function(event){
     if(todoInput.value){
         if(!todos.includes(todoInput.value) && !completed.includes(todoInput.value)){ 
             addTodo();
-            showTodo();
+            showTodo(todoInput.value);
         };
     };
 });
@@ -31,64 +31,25 @@ function loadTodos(){
     const todosData = localStorage.getItem('todos');
     const completedData = localStorage.getItem('completed');
     
+    // If local storage is not empty put the data into the arrays
     if(todosData){
         todos = JSON.parse(todosData);
+    };
+    if(completedData){
         completed = JSON.parse(completedData); 
-    }
+    };
     
+    // Add todos from the array to the todo list
     for(i = 0; i < todos.length; ++i){
-        let todo = '';
-        todo = todos[i];
-
-        const todoItem = document.createElement('li');
-        const paragraph = document.createElement('p');    
-        var todoText = document.createTextNode(todo);
-        paragraph.appendChild(todoText);
-        const deleteButton = document.createElement('button');
-        const completeButton = document.createElement('button');
-
-        completeButton.classList.add('completeButton');
-        completeButton.innerHTML = '&#10004;';
-        completeButton.addEventListener('click', completeTodo);
-
-        deleteButton.classList.add('deleteButton');
-        deleteButton.innerHTML = '&#10008;';
-        deleteButton.addEventListener('click', deleteTodo);
-
-        todoItem.classList.add('todo');
-        todoItem.appendChild(completeButton);
-        todoItem.appendChild(paragraph);
-        todoItem.appendChild(deleteButton);
-        todoList.appendChild(todoItem);
+        let todo = todos[i];
+        showTodo(todo);
     };
     
+    // Add todos from the array to the completed list
     for(i = 0; i < completed.length; ++i){
-        let completedTodo = '';
-        completedTodo = completed[i];
-
-        const todoItem = document.createElement('li');
-        const paragraph = document.createElement('p');    
-        var todoText = document.createTextNode(completedTodo);
-        paragraph.appendChild(todoText);
-        const deleteButton = document.createElement('button');
-        const completeButton = document.createElement('button');
-
-        completeButton.classList.add('completeButton');
-        completeButton.innerHTML = '&#10004;';
-        completeButton.addEventListener('click', completeTodo);
-
-        deleteButton.classList.add('deleteButton');
-        deleteButton.innerHTML = '&#10008;';
-        deleteButton.addEventListener('click', deleteTodo);
-
-        todoItem.classList.add('todo');
-        todoItem.appendChild(completeButton);
-        todoItem.appendChild(paragraph);
-        todoItem.appendChild(deleteButton);
-        completedList.appendChild(todoItem);
+        let completedTodo = completed[i];
+        showTodo(completedTodo);
     };
-    
-    showDeleteButton();
 };
 
 // Add new todo to array and local storage
@@ -97,15 +58,14 @@ function addTodo(){
     localStorage.setItem('todos', JSON.stringify(todos));
 };
 
-// Add new todo to the page
-function showTodo(){
+// Show todos from the local storage on the page
+function showTodo(t){
     const todoItem = document.createElement('li');
+    const paragraph = document.createElement('p');    
+    var todoText = document.createTextNode(t);
+    paragraph.appendChild(todoText);
     const deleteButton = document.createElement('button');
     const completeButton = document.createElement('button');
-    const paragraph = document.createElement('p');
-    const todoText = document.createTextNode(todoInput.value);
-
-    paragraph.appendChild(todoText);
 
     completeButton.classList.add('completeButton');
     completeButton.innerHTML = '&#10004;';
@@ -119,9 +79,12 @@ function showTodo(){
     todoItem.appendChild(completeButton);
     todoItem.appendChild(paragraph);
     todoItem.appendChild(deleteButton);
-
-    todoList.appendChild(todoItem);
-
+    if(todos.includes(t)){
+        todoList.appendChild(todoItem);
+    }else{
+        completedList.appendChild(todoItem);
+    }
+    
     showDeleteButton();
 
     todoInput.value = '';
@@ -138,7 +101,7 @@ function showDeleteButton(){
         deleteAllCompletedButton.classList.add('show');
         deleteAllCompletedButton.addEventListener('click', deleteAllCompleted);
     };
-}
+};
 
 // This will run when the user clicks on the complete button
 function completeTodo(){
@@ -170,29 +133,32 @@ function completeTodo(){
 
 // This will run when the user clicks on the delete button
 function deleteTodo(){
-    this.parentElement.remove(); // Remove from ul
-
-    // Remove from the todo array
-    const todoName = String(this.previousSibling.innerText);
-    var index = todos.indexOf(todoName);
+    this.parentElement.remove();                                // Remove from ul
+    
+    const todoName = String(this.previousSibling.innerText);    // Remove from the todo array
+    const index = todos.indexOf(todoName);
     if(todos[index] == todoName){
         todos.splice(index, 1);
     };
     
-    localStorage.setItem('todos', JSON.stringify(todos)); // Update local storage
+    localStorage.setItem('todos', JSON.stringify(todos));       // Update local storage
     
-    // Remove from the completed array
-    const completedName = String(this.previousSibling.innerText);
+    
+    const completedName = String(this.previousSibling.innerText);   // Remove from the completed array
     var indexCompleted = completed.indexOf(completedName);
     if(completed[indexCompleted] == completedName){
         completed.splice(indexCompleted, 1);
     };
     
-    localStorage.setItem('completed', JSON.stringify(completed)); // Update local storage
-
+    localStorage.setItem('completed', JSON.stringify(completed));   // Update local storage
+    
     // Hide "Delete all" button when the last todo is deleted
     if(todoList.children.length == 0){
         deleteAllButton.classList.remove('show');
+    };
+    
+    if(completedList.children.length == 0){
+        deleteAllCompletedButton.classList.remove('show');
     };
 };
  
