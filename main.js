@@ -16,15 +16,18 @@ submitTodo.addEventListener('click', function(event){
     
     // Only add todo if it doesn't already exist
     if(todoInput.value){
-        if(!todos.includes(todoInput.value)){ 
+        if(!todos.includes(todoInput.value) && !completed.includes(todoInput.value)){ 
             addTodo();
             showTodo();
         };
     };
 });
 
+
+/////// FUNCTIONS ///////
+
+// Loading todos when entering page
 function loadTodos(){
-    
     const todosData = localStorage.getItem('todos');
     const completedData = localStorage.getItem('completed');
     
@@ -84,14 +87,17 @@ function loadTodos(){
         todoItem.appendChild(deleteButton);
         completedList.appendChild(todoItem);
     };
+    
+    showDeleteButton();
 };
 
-/////// FUNCTIONS ///////
+// Add new todo to array and local storage
 function addTodo(){
     todos.push(todoInput.value);
     localStorage.setItem('todos', JSON.stringify(todos));
 };
 
+// Add new todo to the page
 function showTodo(){
     const todoItem = document.createElement('li');
     const deleteButton = document.createElement('button');
@@ -117,14 +123,11 @@ function showTodo(){
     todoList.appendChild(todoItem);
 
     showDeleteButton();
-//    if(todoList.children.length != 0){
-//        deleteAllButton.classList.add('show');
-//        deleteAllButton.addEventListener('click', deleteAll);
-//    };
 
     todoInput.value = '';
 };
 
+// If lists are not empty, show "Delete all" button
 function showDeleteButton(){
     if(todoList.children.length != 0){
         deleteAllButton.classList.add('show');
@@ -137,23 +140,22 @@ function showDeleteButton(){
     };
 }
 
-// This will run when the user clicks on the complete todo button
+// This will run when the user clicks on the complete button
 function completeTodo(){
-    
+    // Remove from ul
     const completedItem = this.parentElement;
     completedList.appendChild(completedItem);
     completedItem.removeChild;
     
-   // this.parentElement.remove(); // Remove from ul
-    
+    // Remove from the todo array and add to completed array
     const todoName = String(this.nextSibling.innerText);
     var index = todos.indexOf(todoName);
-    
     if(todos[index] == todoName){
         todos.splice(index, 1);
         completed.push(todoName);
     };
     
+    // Update local storage
     localStorage.setItem('completed', JSON.stringify(completed));
     localStorage.setItem('todos', JSON.stringify(todos));
       
@@ -166,20 +168,27 @@ function completeTodo(){
 };
     
 
-// Delete the clicked item from the ul, array and local storage
+// This will run when the user clicks on the delete button
 function deleteTodo(){
     this.parentElement.remove(); // Remove from ul
-    
+
+    // Remove from the todo array
     const todoName = String(this.previousSibling.innerText);
     var index = todos.indexOf(todoName);
-    
     if(todos[index] == todoName){
         todos.splice(index, 1);
     };
     
-    localStorage.setItem('todos', todos);
+    localStorage.setItem('todos', JSON.stringify(todos)); // Update local storage
     
-   // console.log(todos);
+    // Remove from the completed array
+    const completedName = String(this.previousSibling.innerText);
+    var indexCompleted = completed.indexOf(completedName);
+    if(completed[indexCompleted] == completedName){
+        completed.splice(indexCompleted, 1);
+    };
+    
+    localStorage.setItem('completed', JSON.stringify(completed)); // Update local storage
 
     // Hide "Delete all" button when the last todo is deleted
     if(todoList.children.length == 0){
@@ -187,29 +196,18 @@ function deleteTodo(){
     };
 };
  
-// Delete all todo items from the todo list
+// This will run when the user clicks on the "Delete all" button on the todo list
 function deleteAll(){
-    todoList.innerHTML = '';
-    todos = [];
-    localStorage.clear();
-    this.classList.remove('show');
+    todoList.innerHTML = '';                               // Delete from ul
+    todos = [];                                            // Delete from array
+    localStorage.setItem('todos', JSON.stringify(todos));  // Delete from local storage
+    this.classList.remove('show');                         // Remove "Delete all" button
 };
 
-// Delete all todo items from the completed list
+// This will run when the user clicks on the "Delete all" button on the todo completed list
 function deleteAllCompleted(){
     completedList.innerHTML = '';
+    completed = [];
+    localStorage.setItem('completed', JSON.stringify(completed));
     this.classList.remove('show');
 };
-
-
-
-
-
-// This function creates a specific ID to each todo item, totally useless function
-//function addIDToItem(){
-//    const amountOfTodos = document.getElementsByClassName('todo');
-//    
-//    for(var i = 0; i < amountOfTodos.length; i++){
-//        amountOfTodos[i].id = 'todo' + [i];
-//    };
-//};
